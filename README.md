@@ -24,7 +24,8 @@ The first implementation slice includes:
 - a non-synchronizing, device-only Keychain key;
 - HMAC-SHA-256 duplicate lookup;
 - crypto-erasure key rotation on Clear History;
-- no iCloud, account, telemetry, analytics, crash SDK, or network entitlement;
+- no iCloud, account, telemetry, analytics, crash SDK, network feature, or runtime dependency;
+- Developer ID distribution profile with Hardened Runtime and no App Sandbox, required for the release-to-paste Accessibility workflow;
 - Swift 6 strict concurrency and automated security/behavior tests.
 
 ## Security model
@@ -32,6 +33,8 @@ The first implementation slice includes:
 Clipboard data is highly sensitive. Copydalis encrypts every persisted entry before SQLite receives it. The encryption key is stored in macOS Keychain with `WhenUnlockedThisDeviceOnly`, and plaintext is prohibited from application logs.
 
 Encryption at rest does not protect text while it is in the system clipboard, application memory, the destination application, external backups, or from another process running with equivalent user privileges. FileVault, a secured login account, current OS patches, and endpoint policy remain required.
+
+Copydalis is distributed outside App Sandbox because the tested sandboxed build could not obtain the Accessibility trust required to synthesize the final Command-V. The application contains no network functionality and CI rejects known networking APIs/frameworks, but without App Sandbox this is a reviewed code property rather than an operating-system network boundary.
 
 See [SECURITY.md](SECURITY.md), [PRIVACY.md](PRIVACY.md), and [Documentation/THREAT_MODEL.md](Documentation/THREAT_MODEL.md).
 

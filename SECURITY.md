@@ -32,7 +32,9 @@ Response timing targets will be published once a maintainer security contact and
 ## Design commitments
 
 - No clipboard content in logs, analytics, crash-reporting services, issue templates, or CI artifacts.
-- No network or cloud entitlement in V1.
+- No network or cloud functionality in V1; CI rejects known networking APIs and frameworks.
+- Hardened Runtime, Developer ID signing, notarization, and a stable bundle identifier for public releases.
+- No App Sandbox: the sandboxed interaction spike could not obtain Accessibility trust. This limitation is disclosed and compensated by minimal code/dependencies, no networking, encrypted storage, and release verification.
 - Clipboard payload encryption before persistence.
 - Non-synchronizing device-only Keychain key.
 - Protected pasteboard types rejected before plaintext is read.

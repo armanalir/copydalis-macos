@@ -35,4 +35,12 @@ final class PasteTargetPolicyTests: XCTestCase {
             )
         )
     }
+
+    func testActivationRetryIsStrictlyBounded() {
+        XCTAssertFalse(PasteTargetPolicy.shouldRetryActivation(attempt: -1, maximumAttempts: 10))
+        XCTAssertFalse(PasteTargetPolicy.shouldRetryActivation(attempt: 0, maximumAttempts: 10))
+        XCTAssertTrue(PasteTargetPolicy.shouldRetryActivation(attempt: 1, maximumAttempts: 10))
+        XCTAssertTrue(PasteTargetPolicy.shouldRetryActivation(attempt: 9, maximumAttempts: 10))
+        XCTAssertFalse(PasteTargetPolicy.shouldRetryActivation(attempt: 10, maximumAttempts: 10))
+    }
 }

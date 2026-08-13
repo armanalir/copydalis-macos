@@ -26,10 +26,12 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.copydalis.app
         PRODUCT_NAME: Copydalis
         INFOPLIST_FILE: Copydalis/Resources/Info.plist
-        CODE_SIGN_ENTITLEMENTS: Copydalis/Resources/Copydalis.entitlements
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: ""
-        ENABLE_APP_SANDBOX: YES
+        ENABLE_APP_SANDBOX: NO
+      configs:
+        Release:
+          CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
     dependencies:
       - sdk: AppKit.framework
       - sdk: Carbon.framework

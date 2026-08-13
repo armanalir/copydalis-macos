@@ -28,6 +28,7 @@ let package = Package(
                 "History/ClipboardEntry.swift",
                 "History/HistoryRepository.swift",
                 "Interaction/PasteTargetPolicy.swift",
+                "Interaction/PopupInputInterpreter.swift",
                 "Interaction/SelectionSession.swift",
                 "Security/EntryCryptor.swift",
                 "Security/KeyMaterialStore.swift"

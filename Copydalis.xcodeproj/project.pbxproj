@@ -16,9 +16,11 @@
 		319AA8B187267409BDBB7418 /* HotKeyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F006F7D328C86E373FD299 /* HotKeyConfiguration.swift */; };
 		4072720FC83C0B8AD38E6BE7 /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452AC3C85193EAFFA5455FAC /* ClipboardMonitor.swift */; };
 		44A91360A35A86C88A8C6136 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE9E576B5802FC5E0D48ED1 /* StatusItemController.swift */; };
+		48B15C7B2282793B0263AC7F /* PopupInputInterpreterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9751DAFBEA2E4F48C854B7 /* PopupInputInterpreterTests.swift */; };
 		4AFCE2DE17B261B5253CB491 /* HistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3438C891B76FA2AFA6DB745 /* HistoryRepositoryTests.swift */; };
 		4BBC456AC32BCBB9D4BE4246 /* ClipboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CEF1A456EE456219A4BD3 /* ClipboardEntry.swift */; };
 		5175775343CD36571F794579 /* ClipboardFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3901C0E638BAAE9FFDBAAABB /* ClipboardFilter.swift */; };
+		52FDE2BE6FDB6B21028E946D /* PopupInputInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635C046E85E6567584E11C3C /* PopupInputInterpreter.swift */; };
 		5693AD71D89F985A5F0F8A30 /* PasteboardWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7611F039C3983BDFF91E6E56 /* PasteboardWriter.swift */; };
 		58C39843FA4E220547C1E9D6 /* SelectionSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */; };
 		5B28FB1697614ABCEB657887 /* PasteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7CA470C928D17C9A639B4 /* PasteCoordinator.swift */; };
@@ -66,11 +68,13 @@
 		53BBDF3AF56880275F97C21D /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		5EF8E595F610794A903653D2 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		61F4A920DF8F68F7FB270B8E /* CopydalisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CopydalisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		635C046E85E6567584E11C3C /* PopupInputInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupInputInterpreter.swift; sourceTree = "<group>"; };
 		645CC80A8A561B16F98852DD /* CopydalisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopydalisApp.swift; sourceTree = "<group>"; };
 		64EA5CE015734F89CC9C8899 /* ClipboardPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPanelController.swift; sourceTree = "<group>"; };
 		7611F039C3983BDFF91E6E56 /* PasteboardWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardWriter.swift; sourceTree = "<group>"; };
 		809BF2DA8969E4A6460AB1EA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		859CE0A8A2A47B86936991A1 /* ClipboardFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardFilterTests.swift; sourceTree = "<group>"; };
+		8B9751DAFBEA2E4F48C854B7 /* PopupInputInterpreterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupInputInterpreterTests.swift; sourceTree = "<group>"; };
 		95013267BCCA35BD13F33B92 /* KeyMaterialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMaterialStore.swift; sourceTree = "<group>"; };
 		98BBA32405D9C5424FD1FE2B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		99BB0E4DA3DF94066345F854 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -196,6 +200,7 @@
 				E1F006F7D328C86E373FD299 /* HotKeyConfiguration.swift */,
 				EDA7CA470C928D17C9A639B4 /* PasteCoordinator.swift */,
 				D27B9F28396DC6091132D79E /* PasteTargetPolicy.swift */,
+				635C046E85E6567584E11C3C /* PopupInputInterpreter.swift */,
 				398948AC16458DF0E5E7C7C9 /* SelectionSession.swift */,
 			);
 			path = Interaction;
@@ -243,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				14E2077E714658CC43049379 /* PasteTargetPolicyTests.swift */,
+				8B9751DAFBEA2E4F48C854B7 /* PopupInputInterpreterTests.swift */,
 				20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */,
 			);
 			path = Interaction;
@@ -368,6 +374,7 @@
 				5B28FB1697614ABCEB657887 /* PasteCoordinator.swift in Sources */,
 				BC747CF3B92C444A4B94C562 /* PasteTargetPolicy.swift in Sources */,
 				5693AD71D89F985A5F0F8A30 /* PasteboardWriter.swift in Sources */,
+				52FDE2BE6FDB6B21028E946D /* PopupInputInterpreter.swift in Sources */,
 				68360AB05E648E336AF72F32 /* PrivacySafeLogger.swift in Sources */,
 				DC18C9425A81CC6BFC824C32 /* SelectionSession.swift in Sources */,
 				7819F88992F790E2B61111EF /* SettingsWindowController.swift in Sources */,
@@ -383,6 +390,7 @@
 				A9D418275873BF0901311B2E /* EntryCryptorTests.swift in Sources */,
 				4AFCE2DE17B261B5253CB491 /* HistoryRepositoryTests.swift in Sources */,
 				F4DEB00F8DBC2879C53669F1 /* PasteTargetPolicyTests.swift in Sources */,
+				48B15C7B2282793B0263AC7F /* PopupInputInterpreterTests.swift in Sources */,
 				0D5BB76B428B595B64727E75 /* SecurityBaselineTests.swift in Sources */,
 				58C39843FA4E220547C1E9D6 /* SelectionSessionTests.swift in Sources */,
 			);
@@ -403,11 +411,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Copydalis/Resources/Copydalis.entitlements;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				INFOPLIST_FILE = Copydalis/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -423,11 +431,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Copydalis/Resources/Copydalis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				INFOPLIST_FILE = Copydalis/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

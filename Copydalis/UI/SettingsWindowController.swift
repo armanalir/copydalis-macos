@@ -16,6 +16,14 @@ final class SettingsWindowController: NSWindowController {
     private let appearancePopUp = NSPopUpButton()
     private let menuActionPopUp = NSPopUpButton()
     private let hotKeyRecorder = HotKeyRecorderButton()
+    private let popupOpacitySlider = NSSlider()
+    private let popupOpacityValue = NSTextField(labelWithString: "")
+    private let accessibilityStatus = NSTextField(wrappingLabelWithString: "")
+    private lazy var permissionButton = NSButton(
+        title: "Request Accessibility Permission",
+        target: self,
+        action: #selector(requestPermission)
+    )
 
     init(
         settings: AppSettings,
@@ -26,7 +34,7 @@ final class SettingsWindowController: NSWindowController {
         self.pasteCoordinator = pasteCoordinator
         self.onSettingsChanged = onSettingsChanged
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 520, height: 610),
+            contentRect: NSRect(x: 0, y: 0, width: 520, height: 690),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -35,6 +43,12 @@ final class SettingsWindowController: NSWindowController {
         window.isReleasedWhenClosed = false
         super.init(window: window)
         buildInterface()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidBecomeActive),
+            name: NSApplication.didBecomeActiveNotification,
+            object: nil
+        )
     }
 
     required init?(coder: NSCoder) {
@@ -92,6 +106,22 @@ final class SettingsWindowController: NSWindowController {
         appearancePopUp.action = #selector(appearanceChanged(_:))
         let appearanceRow = labeledControl(title: "Appearance", control: appearancePopUp)
 
+        popupOpacitySlider.minValue = PopupAppearanceConstraints.minimumOpacity
+        popupOpacitySlider.maxValue = PopupAppearanceConstraints.maximumOpacity
+        popupOpacitySlider.isContinuous = true
+        popupOpacitySlider.numberOfTickMarks = 7
+        popupOpacitySlider.allowsTickMarkValuesOnly = false
+        popupOpacitySlider.target = self
+        popupOpacitySlider.action = #selector(popupOpacityChanged(_:))
+        popupOpacitySlider.widthAnchor.constraint(equalToConstant: 170).isActive = true
+        popupOpacityValue.alignment = .right
+        popupOpacityValue.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        let opacityControls = NSStackView(views: [popupOpacitySlider, popupOpacityValue])
+        opacityControls.orientation = .horizontal
+        opacityControls.alignment = .centerY
+        opacityControls.spacing = 8
+        let popupOpacityRow = labeledControl(title: "Popup opacity", control: opacityControls)
+
         menuActionPopUp.addItems(withTitles: ["Paste", "Copy only"])
         menuActionPopUp.target = self
         menuActionPopUp.action = #selector(menuActionChanged(_:))
@@ -105,14 +135,14 @@ final class SettingsWindowController: NSWindowController {
 
         let privacy = NSTextField(labelWithString: "Privacy & Security")
         privacy.font = .boldSystemFont(ofSize: 16)
-        let privacyText = NSTextField(wrappingLabelWithString: "History is encrypted locally. Copydalis has no cloud synchronization, analytics, or network entitlement. Automatic paste requires Accessibility permission.")
+        let privacyText = NSTextField(wrappingLabelWithString: "History is encrypted locally. Copydalis has no cloud synchronization, analytics, or network functionality. Automatic paste requires Accessibility permission.")
         privacyText.textColor = .secondaryLabelColor
-        let permission = NSButton(title: "Request Accessibility Permission", target: self, action: #selector(requestPermission))
+        accessibilityStatus.font = .systemFont(ofSize: 12, weight: .medium)
 
         let stack = NSStackView(views: [
-            title, hotkey, login, capacity, menuCount, popupCount, appearanceRow, menuActionRow,
+            title, hotkey, login, capacity, menuCount, popupCount, appearanceRow, popupOpacityRow, menuActionRow,
             wrap, duplicate, moveToNewest, arrows, metadata,
-            privacy, privacyText, permission
+            privacy, privacyText, accessibilityStatus, permissionButton
         ])
         stack.orientation = .vertical
         stack.alignment = .leading
@@ -171,11 +201,14 @@ final class SettingsWindowController: NSWindowController {
         capacityStepper.integerValue = settings.historyCapacity
         menuCountStepper.integerValue = settings.menuItemCount
         popupCountStepper.integerValue = settings.popupRowCount
+        popupOpacitySlider.doubleValue = settings.popupOpacity
+        popupOpacityValue.stringValue = "\(Int((settings.popupOpacity * 100).rounded()))%"
         hotKeyRecorder.setConfiguration(settings.hotKey)
         if let index = AppAppearance.allCases.firstIndex(of: settings.appearance) {
             appearancePopUp.selectItem(at: index)
         }
         menuActionPopUp.selectItem(at: settings.menuSelectionAction == .paste ? 0 : 1)
+        refreshAccessibilityStatus()
     }
 
     @objc private func capacityChanged(_ sender: NSStepper) {
@@ -194,6 +227,10 @@ final class SettingsWindowController: NSWindowController {
         settings.appearance = AppAppearance.allCases[safe: sender.indexOfSelectedItem] ?? .system
         changed()
     }
+    @objc private func popupOpacityChanged(_ sender: NSSlider) {
+        settings.popupOpacity = sender.doubleValue
+        changed()
+    }
     @objc private func menuActionChanged(_ sender: NSPopUpButton) {
         settings.menuSelectionAction = sender.indexOfSelectedItem == 0 ? .paste : .copyOnly
         changed()
@@ -203,7 +240,13 @@ final class SettingsWindowController: NSWindowController {
     @objc private func moveToNewestChanged(_ sender: NSButton) { settings.movePastedToNewest = sender.state == .on; changed() }
     @objc private func arrowsChanged(_ sender: NSButton) { settings.horizontalArrowAliases = sender.state == .on; changed() }
     @objc private func metadataChanged(_ sender: NSButton) { settings.showSourceMetadata = sender.state == .on; changed() }
-    @objc private func requestPermission() { pasteCoordinator.requestAccessibilityPermission() }
+    @objc private func requestPermission() {
+        pasteCoordinator.requestAccessibilityPermission()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
+            self?.refreshAccessibilityStatus()
+        }
+    }
+    @objc private func applicationDidBecomeActive() { refreshAccessibilityStatus() }
     @objc private func loginChanged(_ sender: NSButton) {
         do {
             try launchAtLogin.setEnabled(sender.state == .on)
@@ -220,6 +263,15 @@ final class SettingsWindowController: NSWindowController {
     private func changed() {
         refreshValues()
         onSettingsChanged()
+    }
+
+    private func refreshAccessibilityStatus() {
+        let trusted = pasteCoordinator.isAccessibilityTrusted
+        accessibilityStatus.stringValue = trusted
+            ? "Accessibility: Granted"
+            : "Accessibility: Not granted — enable Copydalis in System Settings, then relaunch."
+        accessibilityStatus.textColor = trusted ? .systemGreen : .systemOrange
+        permissionButton.isEnabled = !trusted
     }
 }
 

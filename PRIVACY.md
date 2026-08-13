@@ -23,7 +23,7 @@ The data is used only to display, select, copy, and paste local clipboard histor
 
 ## Transfers and network activity
 
-V1 has no account, cloud synchronization, analytics, advertising, remote crash reporting, or network entitlement. Copydalis does not intentionally transfer clipboard data to another device or service.
+V1 has no account, cloud synchronization, analytics, advertising, remote crash reporting, or network functionality. Copydalis does not intentionally transfer clipboard data to another device or service. Because automatic paste requires a Developer ID build outside App Sandbox, absence of network activity is enforced by reviewed code, dependency restrictions, and CI checks rather than by a macOS sandbox network rule.
 
 ## User controls
 

@@ -1,5 +1,15 @@
 import AppKit
 
+// AppKit invokes local event monitors on the application's main thread. The box
+// keeps NSEvent inside that callback while Swift 6 verifies the actor hop.
+private final class MainThreadEventBox: @unchecked Sendable {
+    let event: NSEvent
+
+    init(_ event: NSEvent) {
+        self.event = event
+    }
+}
+
 @MainActor
 final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableViewDelegate {
     private final class ClipboardPanel: NSPanel {
@@ -7,31 +17,16 @@ final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableVi
         override var canBecomeMain: Bool { false }
     }
 
-    private final class EventCapturingView: NSView {
-        var onKeyDown: ((NSEvent) -> Void)?
-        var onFlagsChanged: ((NSEvent.ModifierFlags) -> Void)?
-
-        override var acceptsFirstResponder: Bool { true }
-
-        override func keyDown(with event: NSEvent) {
-            onKeyDown?(event)
-        }
-
-        override func flagsChanged(with event: NSEvent) {
-            onFlagsChanged?(event.modifierFlags)
-        }
-    }
-
     private let panel: ClipboardPanel
     private let tableView = NSTableView()
     private let scrollView = NSScrollView()
-    private let eventView = EventCapturingView()
     private var session = SelectionSession(entries: [], wraparound: false)
     private var visibleRowCount = 7
     private var showMetadata = true
     private var horizontalArrowAliases = true
     private var terminalHandler: ((SelectionSessionOutcome) -> Void)?
     private var watchdog: Timer?
+    private var localEventMonitor: Any?
 
     override init() {
         panel = ClipboardPanel(
@@ -43,7 +38,6 @@ final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableVi
         super.init()
         configurePanel()
         configureTable()
-        configureEvents()
     }
 
     var isVisible: Bool { panel.isVisible }
@@ -60,6 +54,7 @@ final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableVi
         horizontalArrowAliases = settings.horizontalArrowAliases
         self.terminalHandler = terminalHandler
         panel.appearance = settings.appearance.appearance
+        panel.alphaValue = CGFloat(settings.popupOpacity)
         tableView.reloadData()
         tableView.selectRowIndexes(entries.isEmpty ? [] : [0], byExtendingSelection: false)
 
@@ -67,9 +62,10 @@ final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableVi
         let height = CGFloat(rowCount) * tableView.rowHeight + 20
         panel.setContentSize(NSSize(width: 560, height: min(height, 720)))
         centerOnPreferredScreen()
+        installLocalEventMonitor()
         panel.orderFrontRegardless()
         panel.makeKey()
-        panel.makeFirstResponder(eventView)
+        panel.makeFirstResponder(tableView)
 
         watchdog?.invalidate()
         watchdog = Timer.scheduledTimer(withTimeInterval: 15, repeats: false) { [weak self] _ in
@@ -178,64 +174,80 @@ final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableVi
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(scrollView)
 
-        eventView.translatesAutoresizingMaskIntoConstraints = false
-        eventView.alphaValue = 0
-        container.addSubview(eventView)
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10),
             scrollView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -10),
             scrollView.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
-            scrollView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -10),
-            eventView.widthAnchor.constraint(equalToConstant: 1),
-            eventView.heightAnchor.constraint(equalToConstant: 1),
-            eventView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            eventView.topAnchor.constraint(equalTo: container.topAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -10)
         ])
     }
 
-    private func configureEvents() {
-        eventView.onFlagsChanged = { [weak self] flags in
-            guard let self else { return }
-            let activeModifiers = flags.intersection([.command, .shift, .control, .option])
-            if activeModifiers.isEmpty {
-                self.finish(self.session.commit())
+    private func installLocalEventMonitor() {
+        removeLocalEventMonitor()
+        localEventMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: [.keyDown, .flagsChanged]
+        ) { [weak self] event in
+            let eventBox = MainThreadEventBox(event)
+            let shouldConsume = MainActor.assumeIsolated { () -> Bool in
+                guard let self, self.panel.isVisible else { return false }
+                switch eventBox.event.type {
+                case .flagsChanged:
+                    let activeModifiers = eventBox.event.modifierFlags.intersection([
+                        .command, .shift, .control, .option
+                    ])
+                    if activeModifiers.isEmpty {
+                        self.finish(self.session.commit())
+                    }
+                    return true
+                case .keyDown:
+                    return self.handleKeyDown(eventBox.event)
+                default:
+                    return false
+                }
             }
-        }
-        eventView.onKeyDown = { [weak self] event in
-            self?.handleKeyDown(event)
+            return shouldConsume ? nil : event
         }
     }
 
-    private func handleKeyDown(_ event: NSEvent) {
-        switch Int(event.keyCode) {
-        case 125:
+    private func removeLocalEventMonitor() {
+        if let localEventMonitor {
+            NSEvent.removeMonitor(localEventMonitor)
+            self.localEventMonitor = nil
+        }
+    }
+
+    @discardableResult
+    private func handleKeyDown(_ event: NSEvent) -> Bool {
+        let command = PopupInputInterpreter.command(
+            forKeyCode: event.keyCode,
+            horizontalArrowAliases: horizontalArrowAliases
+        )
+        switch command {
+        case .moveOlder:
             session.move(.older)
-        case 126:
+        case .moveNewer:
             session.move(.newer)
-        case 124 where horizontalArrowAliases:
-            session.move(.older)
-        case 123 where horizontalArrowAliases:
-            session.move(.newer)
-        case 115:
+        case .selectNewest:
             session.selectNewest()
-        case 119:
+        case .selectOldest:
             session.selectOldest()
-        case 121:
+        case .pageOlder:
             session.movePage(visibleRowCount)
-        case 116:
+        case .pageNewer:
             session.movePage(-visibleRowCount)
-        case 36, 76:
+        case .commit:
             finish(session.commit())
-            return
-        case 53:
+            return true
+        case .cancel:
             finish(session.cancel())
-            return
-        case 9:
-            return
-        default:
-            return
+            return true
+        case .ignore:
+            return true
+        case .passThrough:
+            return false
         }
         updateSelection()
+        return true
     }
 
     private func updateSelection() {
@@ -248,6 +260,7 @@ final class ClipboardPanelController: NSObject, NSTableViewDataSource, NSTableVi
         guard outcome != .none else { return }
         watchdog?.invalidate()
         watchdog = nil
+        removeLocalEventMonitor()
         panel.orderOut(nil)
         let handler = terminalHandler
         terminalHandler = nil

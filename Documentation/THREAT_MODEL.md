@@ -32,6 +32,7 @@ Selected target app <- synthetic paste+
 | Plaintext logging | Fixed privacy-safe event identifiers; source policy checks | OS or third-party tools may independently observe pasteboard/processes |
 | Wrong-target paste | Capture intended app, one-shot session, fail-closed paths, manual matrix | Focus can change at the OS/user boundary and requires interaction testing |
 | Persistent key monitoring | Carbon hotkey registration and popup-local event handling | Accessibility is still required for final synthetic paste |
+| Unsandboxed process compromise | Hardened Runtime, signed/notarized stable releases, no runtime dependencies or network functionality, CI source/project checks | App Sandbox cannot enforce filesystem/network boundaries; a same-user code-execution compromise has broader access |
 | Oversized/copy-storm denial of service | 10 MiB entry cap, bounded history, serialized actor/database transactions | System pasteboard itself is outside Copydalis control |
 | Supply-chain compromise | No runtime dependencies in current implementation, code review, CI, signed releases | Xcode/macOS/build infrastructure remain trusted dependencies |
 | Incomplete deletion on SSD/backups | Key rotation provides crypto-erasure boundary | System clipboard and external backups are outside application control |
@@ -49,4 +50,4 @@ Selected target app <- synthetic paste+
 
 Automated tests cover encryption round-trip, nonce uniqueness, tamper/wrong-key rejection, keyed digests, plaintext absence in SQLite/WAL, key rotation, database ordering/capacity/deduplication, protected-type filtering, and exactly-once selection outcomes.
 
-Manual evidence remains required for Accessibility, keyboard layouts, focus changes, secure input, lock/unlock, full-screen apps, Spaces, multiple displays, MDM/EDR coexistence, signing, notarization, and sandbox compatibility.
+Manual evidence remains required for Accessibility, keyboard layouts, focus changes, secure input, lock/unlock, full-screen apps, Spaces, multiple displays, MDM/EDR coexistence, signing, and notarization. The 2026-08-13 interaction spike established that the sandboxed build could not obtain Accessibility trust, while the sandbox-disabled Hardened Runtime build completed targeted automatic paste.

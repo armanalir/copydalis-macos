@@ -47,6 +47,7 @@ final class AppSettings {
         static let hotKeyKeyCode = "hotKeyKeyCode"
         static let hotKeyModifiers = "hotKeyModifiers"
         static let hotKeyDisplayName = "hotKeyDisplayName"
+        static let popupOpacity = "popupOpacity"
     }
 
     private let defaults: UserDefaults
@@ -67,7 +68,8 @@ final class AppSettings {
             Key.showSourceMetadata: true,
             Key.hotKeyKeyCode: Int(HotKeyConfiguration.defaultShortcut.keyCode),
             Key.hotKeyModifiers: Int(HotKeyConfiguration.defaultShortcut.carbonModifiers),
-            Key.hotKeyDisplayName: HotKeyConfiguration.defaultShortcut.displayName
+            Key.hotKeyDisplayName: HotKeyConfiguration.defaultShortcut.displayName,
+            Key.popupOpacity: PopupAppearanceConstraints.defaultOpacity
         ])
     }
 
@@ -89,6 +91,20 @@ final class AppSettings {
     var appearance: AppAppearance {
         get { AppAppearance(rawValue: defaults.string(forKey: Key.appearance) ?? "") ?? .system }
         set { defaults.set(newValue.rawValue, forKey: Key.appearance) }
+    }
+
+    var popupOpacity: Double {
+        get {
+            PopupAppearanceConstraints.clampOpacity(
+                defaults.double(forKey: Key.popupOpacity)
+            )
+        }
+        set {
+            defaults.set(
+                PopupAppearanceConstraints.clampOpacity(newValue),
+                forKey: Key.popupOpacity
+            )
+        }
     }
 
     var capturePaused: Bool {

@@ -14,11 +14,18 @@ enum PasteResult: Equatable, Sendable {
 
 @MainActor
 final class PasteCoordinator {
+    private static let activationPollInterval = 0.05
+    private static let maximumActivationAttempts = 10
+
     private let writer: PasteboardWriter
     private let logger = PrivacySafeLogger(category: "paste")
 
     init(writer: PasteboardWriter) {
         self.writer = writer
+    }
+
+    var isAccessibilityTrusted: Bool {
+        AXIsProcessTrusted()
     }
 
     func commit(
@@ -41,28 +48,55 @@ final class PasteCoordinator {
             return .copiedOnlyTargetUnavailable
         }
 
-        targetApplication.activate(options: [])
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) { [weak self, weak targetApplication] in
-            guard let self, let targetApplication else {
+        NSApp.yieldActivation(to: targetApplication)
+        _ = targetApplication.activate(from: .current, options: [])
+        verifyTargetAndPaste(
+            targetApplication: targetApplication,
+            attempt: 1,
+            completion: completion
+        )
+        return .pasteScheduled
+    }
+
+    private func verifyTargetAndPaste(
+        targetApplication: NSRunningApplication,
+        attempt: Int,
+        completion: ((PasteResult) -> Void)?
+    ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.activationPollInterval) { [weak self, targetApplication] in
+            guard let self, !targetApplication.isTerminated else {
                 completion?(.copiedOnlyTargetUnavailable)
                 return
             }
+
             let frontmostPID = NSWorkspace.shared.frontmostApplication?.processIdentifier
-            guard PasteTargetPolicy.mayPostEvent(
+            if PasteTargetPolicy.mayPostEvent(
                 expectedProcessIdentifier: targetApplication.processIdentifier,
                 frontmostProcessIdentifier: frontmostPID,
                 targetIsTerminated: targetApplication.isTerminated
+            ) {
+                completion?(self.postCommandV(to: targetApplication.processIdentifier))
+                return
+            }
+
+            guard PasteTargetPolicy.shouldRetryActivation(
+                attempt: attempt,
+                maximumAttempts: Self.maximumActivationAttempts
             ) else {
                 self.logger.info("automatic_paste_target_mismatch")
                 completion?(.copiedOnlyTargetMismatch)
                 return
             }
-            completion?(self.postCommandV())
+
+            self.verifyTargetAndPaste(
+                targetApplication: targetApplication,
+                attempt: attempt + 1,
+                completion: completion
+            )
         }
-        return .pasteScheduled
     }
 
-    private func postCommandV() -> PasteResult {
+    private func postCommandV(to processIdentifier: pid_t) -> PasteResult {
         guard
             let source = CGEventSource(stateID: .combinedSessionState),
             let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_ANSI_V), keyDown: true),
@@ -74,13 +108,15 @@ final class PasteCoordinator {
 
         keyDown.flags = .maskCommand
         keyUp.flags = .maskCommand
-        keyDown.post(tap: .cghidEventTap)
-        keyUp.post(tap: .cghidEventTap)
+        keyDown.postToPid(processIdentifier)
+        keyUp.postToPid(processIdentifier)
         logger.info("automatic_paste_posted")
         return .pasted
     }
 
     func requestAccessibilityPermission() {
+        // Swift 6 imports kAXTrustedCheckOptionPrompt as concurrency-unsafe
+        // mutable C state. This is its documented, stable dictionary key.
         let options = ["AXTrustedCheckOptionPrompt": true]
         AXIsProcessTrustedWithOptions(options as CFDictionary)
     }
