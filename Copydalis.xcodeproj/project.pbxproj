@@ -1,0 +1,636 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		050129C8B224A7DDE5819437 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 809BF2DA8969E4A6460AB1EA /* libsqlite3.tbd */; };
+		0B0EA35441B537DB0FA10F2F /* KeyMaterialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95013267BCCA35BD13F33B92 /* KeyMaterialStore.swift */; };
+		0D5BB76B428B595B64727E75 /* SecurityBaselineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33831D90012A8D8AF2B5B8 /* SecurityBaselineTests.swift */; };
+		1A4FBFDF4DCB737D383F76BE /* CopydalisApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645CC80A8A561B16F98852DD /* CopydalisApp.swift */; };
+		1ABF9A447A41786215458BA3 /* EntryCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD58EE944F1ED8653884C257 /* EntryCryptor.swift */; };
+		2DFDAA87D6ABCA2906D7247E /* HistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30528D9CF784EC502BFA12F3 /* HistoryRepository.swift */; };
+		319AA8B187267409BDBB7418 /* HotKeyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F006F7D328C86E373FD299 /* HotKeyConfiguration.swift */; };
+		4072720FC83C0B8AD38E6BE7 /* ClipboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452AC3C85193EAFFA5455FAC /* ClipboardMonitor.swift */; };
+		44A91360A35A86C88A8C6136 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE9E576B5802FC5E0D48ED1 /* StatusItemController.swift */; };
+		4AFCE2DE17B261B5253CB491 /* HistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3438C891B76FA2AFA6DB745 /* HistoryRepositoryTests.swift */; };
+		4BBC456AC32BCBB9D4BE4246 /* ClipboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489CEF1A456EE456219A4BD3 /* ClipboardEntry.swift */; };
+		5175775343CD36571F794579 /* ClipboardFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3901C0E638BAAE9FFDBAAABB /* ClipboardFilter.swift */; };
+		5693AD71D89F985A5F0F8A30 /* PasteboardWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7611F039C3983BDFF91E6E56 /* PasteboardWriter.swift */; };
+		58C39843FA4E220547C1E9D6 /* SelectionSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */; };
+		5B28FB1697614ABCEB657887 /* PasteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7CA470C928D17C9A639B4 /* PasteCoordinator.swift */; };
+		6219A9B673626439F0FFDC90 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7AE4F19F7291C7C8CBEE626 /* ServiceManagement.framework */; };
+		68360AB05E648E336AF72F32 /* PrivacySafeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2381FE6E6E86CAFA5DD0BBE /* PrivacySafeLogger.swift */; };
+		7819F88992F790E2B61111EF /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC872E02DA869D36B68C20D /* SettingsWindowController.swift */; };
+		886D2D1377F43DB67B71240A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99BB0E4DA3DF94066345F854 /* AppKit.framework */; };
+		960453A55DC4064DA92B6596 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3166A69961C44C6D5E86D813 /* Carbon.framework */; };
+		A347547397BBBF4DD3A2572F /* ClipboardFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CE0A8A2A47B86936991A1 /* ClipboardFilterTests.swift */; };
+		A7823E3F92C72B752BDCB138 /* CarbonHotKeyRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC286C6FA4DCEE555852AB25 /* CarbonHotKeyRegistrar.swift */; };
+		A9D418275873BF0901311B2E /* EntryCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493D17016300FC2C64DF51D3 /* EntryCryptorTests.swift */; };
+		AA8888A684260D1E0A20E587 /* HotKeyRecorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C131647BF473159C46F4A52 /* HotKeyRecorderButton.swift */; };
+		BC747CF3B92C444A4B94C562 /* PasteTargetPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27B9F28396DC6091132D79E /* PasteTargetPolicy.swift */; };
+		C5ABD9E047E4C58C1BDA1BA2 /* ClipboardPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA5CE015734F89CC9C8899 /* ClipboardPanelController.swift */; };
+		CDA062C132D6EB1044B5B869 /* LaunchAtLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14991B6DC7C6FDF87B425CBF /* LaunchAtLoginController.swift */; };
+		D2BB7AC04E6BE14150852BAB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98BBA32405D9C5424FD1FE2B /* Security.framework */; };
+		DC18C9425A81CC6BFC824C32 /* SelectionSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398948AC16458DF0E5E7C7C9 /* SelectionSession.swift */; };
+		DF92C22547A45375AE7D022E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF8E595F610794A903653D2 /* AppSettings.swift */; };
+		E25DB829297C52625D0B06B3 /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53BBDF3AF56880275F97C21D /* CryptoKit.framework */; };
+		F4DEB00F8DBC2879C53669F1 /* PasteTargetPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E2077E714658CC43049379 /* PasteTargetPolicyTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B403316C45F5ACAFEC157DA7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CE9B86B5456F4196F0B41C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DD7054DCF80148E782B86DA;
+			remoteInfo = Copydalis;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		14991B6DC7C6FDF87B425CBF /* LaunchAtLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginController.swift; sourceTree = "<group>"; };
+		14E2077E714658CC43049379 /* PasteTargetPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteTargetPolicyTests.swift; sourceTree = "<group>"; };
+		20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionSessionTests.swift; sourceTree = "<group>"; };
+		30528D9CF784EC502BFA12F3 /* HistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRepository.swift; sourceTree = "<group>"; };
+		3166A69961C44C6D5E86D813 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		3901C0E638BAAE9FFDBAAABB /* ClipboardFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardFilter.swift; sourceTree = "<group>"; };
+		398948AC16458DF0E5E7C7C9 /* SelectionSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionSession.swift; sourceTree = "<group>"; };
+		452AC3C85193EAFFA5455FAC /* ClipboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardMonitor.swift; sourceTree = "<group>"; };
+		489CEF1A456EE456219A4BD3 /* ClipboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardEntry.swift; sourceTree = "<group>"; };
+		493D17016300FC2C64DF51D3 /* EntryCryptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryCryptorTests.swift; sourceTree = "<group>"; };
+		4C131647BF473159C46F4A52 /* HotKeyRecorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderButton.swift; sourceTree = "<group>"; };
+		53BBDF3AF56880275F97C21D /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
+		5EF8E595F610794A903653D2 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		61F4A920DF8F68F7FB270B8E /* CopydalisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CopydalisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		645CC80A8A561B16F98852DD /* CopydalisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopydalisApp.swift; sourceTree = "<group>"; };
+		64EA5CE015734F89CC9C8899 /* ClipboardPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPanelController.swift; sourceTree = "<group>"; };
+		7611F039C3983BDFF91E6E56 /* PasteboardWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardWriter.swift; sourceTree = "<group>"; };
+		809BF2DA8969E4A6460AB1EA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		859CE0A8A2A47B86936991A1 /* ClipboardFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardFilterTests.swift; sourceTree = "<group>"; };
+		95013267BCCA35BD13F33B92 /* KeyMaterialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMaterialStore.swift; sourceTree = "<group>"; };
+		98BBA32405D9C5424FD1FE2B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		99BB0E4DA3DF94066345F854 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9E33831D90012A8D8AF2B5B8 /* SecurityBaselineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityBaselineTests.swift; sourceTree = "<group>"; };
+		A1ACB03C18968B5A2BD50BE5 /* Copydalis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Copydalis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD58EE944F1ED8653884C257 /* EntryCryptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryCryptor.swift; sourceTree = "<group>"; };
+		C7AE4F19F7291C7C8CBEE626 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		D27B9F28396DC6091132D79E /* PasteTargetPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteTargetPolicy.swift; sourceTree = "<group>"; };
+		E1F006F7D328C86E373FD299 /* HotKeyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyConfiguration.swift; sourceTree = "<group>"; };
+		E3438C891B76FA2AFA6DB745 /* HistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRepositoryTests.swift; sourceTree = "<group>"; };
+		EC286C6FA4DCEE555852AB25 /* CarbonHotKeyRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonHotKeyRegistrar.swift; sourceTree = "<group>"; };
+		EDA7CA470C928D17C9A639B4 /* PasteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteCoordinator.swift; sourceTree = "<group>"; };
+		F2381FE6E6E86CAFA5DD0BBE /* PrivacySafeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySafeLogger.swift; sourceTree = "<group>"; };
+		FAC872E02DA869D36B68C20D /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		FCE9E576B5802FC5E0D48ED1 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3BD7CF204C5C13B5374EFE51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				886D2D1377F43DB67B71240A /* AppKit.framework in Frameworks */,
+				960453A55DC4064DA92B6596 /* Carbon.framework in Frameworks */,
+				E25DB829297C52625D0B06B3 /* CryptoKit.framework in Frameworks */,
+				D2BB7AC04E6BE14150852BAB /* Security.framework in Frameworks */,
+				6219A9B673626439F0FFDC90 /* ServiceManagement.framework in Frameworks */,
+				050129C8B224A7DDE5819437 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		064D34B35118D299155007BA /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				F2381FE6E6E86CAFA5DD0BBE /* PrivacySafeLogger.swift */,
+			);
+			path = Diagnostics;
+			sourceTree = "<group>";
+		};
+		0DD0C038B1DE7E309290A9E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99BB0E4DA3DF94066345F854 /* AppKit.framework */,
+				3166A69961C44C6D5E86D813 /* Carbon.framework */,
+				53BBDF3AF56880275F97C21D /* CryptoKit.framework */,
+				809BF2DA8969E4A6460AB1EA /* libsqlite3.tbd */,
+				98BBA32405D9C5424FD1FE2B /* Security.framework */,
+				C7AE4F19F7291C7C8CBEE626 /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14032C7ECB14A463980D8320 /* Copydalis */ = {
+			isa = PBXGroup;
+			children = (
+				DD3F5A0D261C078A7C397F91 /* App */,
+				45C9A7AB669F4665CADFABC4 /* Clipboard */,
+				064D34B35118D299155007BA /* Diagnostics */,
+				1D32083D095446F90D1935E2 /* History */,
+				5F858F126E25D640E6565B5B /* Interaction */,
+				BDF610FA1EC3DDB99044AEFF /* Security */,
+				86E8BC6BDFE75BFFA58AB369 /* Settings */,
+				26BCDAAF2DFFE568C681B74A /* UI */,
+			);
+			path = Copydalis;
+			sourceTree = "<group>";
+		};
+		1D32083D095446F90D1935E2 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				489CEF1A456EE456219A4BD3 /* ClipboardEntry.swift */,
+				30528D9CF784EC502BFA12F3 /* HistoryRepository.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		21F08716EA51BB21793A0CC4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1ACB03C18968B5A2BD50BE5 /* Copydalis.app */,
+				61F4A920DF8F68F7FB270B8E /* CopydalisTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		26BCDAAF2DFFE568C681B74A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				64EA5CE015734F89CC9C8899 /* ClipboardPanelController.swift */,
+				4C131647BF473159C46F4A52 /* HotKeyRecorderButton.swift */,
+				FAC872E02DA869D36B68C20D /* SettingsWindowController.swift */,
+				FCE9E576B5802FC5E0D48ED1 /* StatusItemController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		45C9A7AB669F4665CADFABC4 /* Clipboard */ = {
+			isa = PBXGroup;
+			children = (
+				3901C0E638BAAE9FFDBAAABB /* ClipboardFilter.swift */,
+				452AC3C85193EAFFA5455FAC /* ClipboardMonitor.swift */,
+				7611F039C3983BDFF91E6E56 /* PasteboardWriter.swift */,
+			);
+			path = Clipboard;
+			sourceTree = "<group>";
+		};
+		59E002F4B93D5454EFE850B4 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				493D17016300FC2C64DF51D3 /* EntryCryptorTests.swift */,
+				9E33831D90012A8D8AF2B5B8 /* SecurityBaselineTests.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		5F858F126E25D640E6565B5B /* Interaction */ = {
+			isa = PBXGroup;
+			children = (
+				EC286C6FA4DCEE555852AB25 /* CarbonHotKeyRegistrar.swift */,
+				E1F006F7D328C86E373FD299 /* HotKeyConfiguration.swift */,
+				EDA7CA470C928D17C9A639B4 /* PasteCoordinator.swift */,
+				D27B9F28396DC6091132D79E /* PasteTargetPolicy.swift */,
+				398948AC16458DF0E5E7C7C9 /* SelectionSession.swift */,
+			);
+			path = Interaction;
+			sourceTree = "<group>";
+		};
+		73CCBAFC3A3F2027350B0538 /* CopydalisTests */ = {
+			isa = PBXGroup;
+			children = (
+				7DAE053B4E9AF49C2627EF3C /* Clipboard */,
+				D6285B0FCA45DABC589DADA5 /* History */,
+				92D0C6AC8A2809A96C898A35 /* Interaction */,
+				59E002F4B93D5454EFE850B4 /* Security */,
+			);
+			path = CopydalisTests;
+			sourceTree = "<group>";
+		};
+		7DAE053B4E9AF49C2627EF3C /* Clipboard */ = {
+			isa = PBXGroup;
+			children = (
+				859CE0A8A2A47B86936991A1 /* ClipboardFilterTests.swift */,
+			);
+			path = Clipboard;
+			sourceTree = "<group>";
+		};
+		86E8BC6BDFE75BFFA58AB369 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5EF8E595F610794A903653D2 /* AppSettings.swift */,
+				14991B6DC7C6FDF87B425CBF /* LaunchAtLoginController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		912A8DA0B8830CC3B71E1B18 = {
+			isa = PBXGroup;
+			children = (
+				14032C7ECB14A463980D8320 /* Copydalis */,
+				73CCBAFC3A3F2027350B0538 /* CopydalisTests */,
+				0DD0C038B1DE7E309290A9E2 /* Frameworks */,
+				21F08716EA51BB21793A0CC4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		92D0C6AC8A2809A96C898A35 /* Interaction */ = {
+			isa = PBXGroup;
+			children = (
+				14E2077E714658CC43049379 /* PasteTargetPolicyTests.swift */,
+				20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */,
+			);
+			path = Interaction;
+			sourceTree = "<group>";
+		};
+		BDF610FA1EC3DDB99044AEFF /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				AD58EE944F1ED8653884C257 /* EntryCryptor.swift */,
+				95013267BCCA35BD13F33B92 /* KeyMaterialStore.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		D6285B0FCA45DABC589DADA5 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				E3438C891B76FA2AFA6DB745 /* HistoryRepositoryTests.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		DD3F5A0D261C078A7C397F91 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				645CC80A8A561B16F98852DD /* CopydalisApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		099A68616506125C9D79BF5A /* CopydalisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19C866F85B0F6E458AA60E94 /* Build configuration list for PBXNativeTarget "CopydalisTests" */;
+			buildPhases = (
+				B62B2B8EA6C7F8E463CB2C6F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7DAD2450FF9DA8BD1E23D199 /* PBXTargetDependency */,
+			);
+			name = CopydalisTests;
+			packageProductDependencies = (
+			);
+			productName = CopydalisTests;
+			productReference = 61F4A920DF8F68F7FB270B8E /* CopydalisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4DD7054DCF80148E782B86DA /* Copydalis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 406266A66BA1C7F385F917C8 /* Build configuration list for PBXNativeTarget "Copydalis" */;
+			buildPhases = (
+				998E18D18AE4718CC196044D /* Sources */,
+				3BD7CF204C5C13B5374EFE51 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Copydalis;
+			packageProductDependencies = (
+			);
+			productName = Copydalis;
+			productReference = A1ACB03C18968B5A2BD50BE5 /* Copydalis.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0CE9B86B5456F4196F0B41C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					4DD7054DCF80148E782B86DA = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FC8E609D4F1A349B6F15A29D /* Build configuration list for PBXProject "Copydalis" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 912A8DA0B8830CC3B71E1B18;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 21F08716EA51BB21793A0CC4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4DD7054DCF80148E782B86DA /* Copydalis */,
+				099A68616506125C9D79BF5A /* CopydalisTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		998E18D18AE4718CC196044D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF92C22547A45375AE7D022E /* AppSettings.swift in Sources */,
+				A7823E3F92C72B752BDCB138 /* CarbonHotKeyRegistrar.swift in Sources */,
+				4BBC456AC32BCBB9D4BE4246 /* ClipboardEntry.swift in Sources */,
+				5175775343CD36571F794579 /* ClipboardFilter.swift in Sources */,
+				4072720FC83C0B8AD38E6BE7 /* ClipboardMonitor.swift in Sources */,
+				C5ABD9E047E4C58C1BDA1BA2 /* ClipboardPanelController.swift in Sources */,
+				1A4FBFDF4DCB737D383F76BE /* CopydalisApp.swift in Sources */,
+				1ABF9A447A41786215458BA3 /* EntryCryptor.swift in Sources */,
+				2DFDAA87D6ABCA2906D7247E /* HistoryRepository.swift in Sources */,
+				319AA8B187267409BDBB7418 /* HotKeyConfiguration.swift in Sources */,
+				AA8888A684260D1E0A20E587 /* HotKeyRecorderButton.swift in Sources */,
+				0B0EA35441B537DB0FA10F2F /* KeyMaterialStore.swift in Sources */,
+				CDA062C132D6EB1044B5B869 /* LaunchAtLoginController.swift in Sources */,
+				5B28FB1697614ABCEB657887 /* PasteCoordinator.swift in Sources */,
+				BC747CF3B92C444A4B94C562 /* PasteTargetPolicy.swift in Sources */,
+				5693AD71D89F985A5F0F8A30 /* PasteboardWriter.swift in Sources */,
+				68360AB05E648E336AF72F32 /* PrivacySafeLogger.swift in Sources */,
+				DC18C9425A81CC6BFC824C32 /* SelectionSession.swift in Sources */,
+				7819F88992F790E2B61111EF /* SettingsWindowController.swift in Sources */,
+				44A91360A35A86C88A8C6136 /* StatusItemController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B62B2B8EA6C7F8E463CB2C6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A347547397BBBF4DD3A2572F /* ClipboardFilterTests.swift in Sources */,
+				A9D418275873BF0901311B2E /* EntryCryptorTests.swift in Sources */,
+				4AFCE2DE17B261B5253CB491 /* HistoryRepositoryTests.swift in Sources */,
+				F4DEB00F8DBC2879C53669F1 /* PasteTargetPolicyTests.swift in Sources */,
+				0D5BB76B428B595B64727E75 /* SecurityBaselineTests.swift in Sources */,
+				58C39843FA4E220547C1E9D6 /* SelectionSessionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7DAD2450FF9DA8BD1E23D199 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DD7054DCF80148E782B86DA /* Copydalis */;
+			targetProxy = B403316C45F5ACAFEC157DA7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1688C014CE6AC0AAC7B81E28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Copydalis/Resources/Copydalis.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				INFOPLIST_FILE = Copydalis/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.copydalis.app;
+				PRODUCT_NAME = Copydalis;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4EEF673ADD08F09A431ECD9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Copydalis/Resources/Copydalis.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				INFOPLIST_FILE = Copydalis/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.copydalis.app;
+				PRODUCT_NAME = Copydalis;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5773886203E22F961DFB9702 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.copydalis.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Copydalis.app/Contents/MacOS/Copydalis";
+			};
+			name = Debug;
+		};
+		8C69F3C78659826B1B5E8F28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.copydalis.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Copydalis.app/Contents/MacOS/Copydalis";
+			};
+			name = Release;
+		};
+		A8C8ECE51057132BB392E0AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		E16D0FD33999042E9B2F13AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		19C866F85B0F6E458AA60E94 /* Build configuration list for PBXNativeTarget "CopydalisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5773886203E22F961DFB9702 /* Debug */,
+				8C69F3C78659826B1B5E8F28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		406266A66BA1C7F385F917C8 /* Build configuration list for PBXNativeTarget "Copydalis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EEF673ADD08F09A431ECD9F /* Debug */,
+				1688C014CE6AC0AAC7B81E28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FC8E609D4F1A349B6F15A29D /* Build configuration list for PBXProject "Copydalis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8C8ECE51057132BB392E0AB /* Debug */,
+				E16D0FD33999042E9B2F13AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0CE9B86B5456F4196F0B41C3 /* Project object */;
+}

@@ -1,0 +1,13 @@
+.DS_Store
+DerivedData/
+.build/
+build/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+.swiftpm/
+Package.resolved
+*.db
+*.db-shm
+*.db-wal

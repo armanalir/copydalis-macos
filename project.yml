@@ -1,0 +1,60 @@
+name: Copydalis
+options:
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+    CLANG_WARN_DOCUMENTATION_COMMENTS: YES
+    CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER: YES
+    ENABLE_HARDENED_RUNTIME: YES
+    DEAD_CODE_STRIPPING: YES
+targets:
+  Copydalis:
+    type: application
+    platform: macOS
+    sources:
+      - path: Copydalis
+        excludes:
+          - Resources/Info.plist
+          - Resources/Copydalis.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.copydalis.app
+        PRODUCT_NAME: Copydalis
+        INFOPLIST_FILE: Copydalis/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Copydalis/Resources/Copydalis.entitlements
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+        ENABLE_APP_SANDBOX: YES
+    dependencies:
+      - sdk: AppKit.framework
+      - sdk: Carbon.framework
+      - sdk: CryptoKit.framework
+      - sdk: Security.framework
+      - sdk: ServiceManagement.framework
+      - sdk: libsqlite3.tbd
+  CopydalisTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: CopydalisTests
+    dependencies:
+      - target: Copydalis
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.copydalis.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Copydalis:
+    build:
+      targets:
+        Copydalis: all
+        CopydalisTests: [test]
+    test:
+      targets:
+        - CopydalisTests
+      gatherCoverageData: true
