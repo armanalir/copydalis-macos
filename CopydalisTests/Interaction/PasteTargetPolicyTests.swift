@@ -43,4 +43,42 @@ final class PasteTargetPolicyTests: XCTestCase {
         XCTAssertTrue(PasteTargetPolicy.shouldRetryActivation(attempt: 9, maximumAttempts: 10))
         XCTAssertFalse(PasteTargetPolicy.shouldRetryActivation(attempt: 10, maximumAttempts: 10))
     }
+
+    func testPasteMenuPolicyMatchesOnlyEnabledCommandV() {
+        XCTAssertTrue(
+            PasteMenuItemPolicy.matchesCommandV(
+                commandCharacter: "V",
+                modifiers: 0,
+                isEnabled: true
+            )
+        )
+        XCTAssertTrue(
+            PasteMenuItemPolicy.matchesCommandV(
+                commandCharacter: "v",
+                modifiers: 0,
+                isEnabled: true
+            )
+        )
+        XCTAssertFalse(
+            PasteMenuItemPolicy.matchesCommandV(
+                commandCharacter: "V",
+                modifiers: 1,
+                isEnabled: true
+            )
+        )
+        XCTAssertFalse(
+            PasteMenuItemPolicy.matchesCommandV(
+                commandCharacter: "C",
+                modifiers: 0,
+                isEnabled: true
+            )
+        )
+        XCTAssertFalse(
+            PasteMenuItemPolicy.matchesCommandV(
+                commandCharacter: "V",
+                modifiers: 0,
+                isEnabled: false
+            )
+        )
+    }
 }

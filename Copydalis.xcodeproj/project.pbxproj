@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A8AC98613B744479F5E050A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 458E47C796A64312940E0D61 /* Assets.xcassets */; };
 		050129C8B224A7DDE5819437 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 809BF2DA8969E4A6460AB1EA /* libsqlite3.tbd */; };
 		0B0EA35441B537DB0FA10F2F /* KeyMaterialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95013267BCCA35BD13F33B92 /* KeyMaterialStore.swift */; };
 		0D5BB76B428B595B64727E75 /* SecurityBaselineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33831D90012A8D8AF2B5B8 /* SecurityBaselineTests.swift */; };
@@ -29,6 +30,7 @@
 		7819F88992F790E2B61111EF /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC872E02DA869D36B68C20D /* SettingsWindowController.swift */; };
 		886D2D1377F43DB67B71240A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99BB0E4DA3DF94066345F854 /* AppKit.framework */; };
 		960453A55DC4064DA92B6596 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3166A69961C44C6D5E86D813 /* Carbon.framework */; };
+		9A0DDE3FD40535D1689368AB /* HotKeyConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D5B698EAED867A7E3719FD /* HotKeyConfigurationTests.swift */; };
 		A347547397BBBF4DD3A2572F /* ClipboardFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CE0A8A2A47B86936991A1 /* ClipboardFilterTests.swift */; };
 		A7823E3F92C72B752BDCB138 /* CarbonHotKeyRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC286C6FA4DCEE555852AB25 /* CarbonHotKeyRegistrar.swift */; };
 		A9D418275873BF0901311B2E /* EntryCryptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493D17016300FC2C64DF51D3 /* EntryCryptorTests.swift */; };
@@ -55,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		14991B6DC7C6FDF87B425CBF /* LaunchAtLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginController.swift; sourceTree = "<group>"; };
+		458E47C796A64312940E0D61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14E2077E714658CC43049379 /* PasteTargetPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteTargetPolicyTests.swift; sourceTree = "<group>"; };
 		20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionSessionTests.swift; sourceTree = "<group>"; };
 		30528D9CF784EC502BFA12F3 /* HistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRepository.swift; sourceTree = "<group>"; };
@@ -70,6 +73,7 @@
 		61F4A920DF8F68F7FB270B8E /* CopydalisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CopydalisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		635C046E85E6567584E11C3C /* PopupInputInterpreter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupInputInterpreter.swift; sourceTree = "<group>"; };
 		645CC80A8A561B16F98852DD /* CopydalisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopydalisApp.swift; sourceTree = "<group>"; };
+		64D5B698EAED867A7E3719FD /* HotKeyConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyConfigurationTests.swift; sourceTree = "<group>"; };
 		64EA5CE015734F89CC9C8899 /* ClipboardPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPanelController.swift; sourceTree = "<group>"; };
 		7611F039C3983BDFF91E6E56 /* PasteboardWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardWriter.swift; sourceTree = "<group>"; };
 		809BF2DA8969E4A6460AB1EA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -141,6 +145,7 @@
 				BDF610FA1EC3DDB99044AEFF /* Security */,
 				86E8BC6BDFE75BFFA58AB369 /* Settings */,
 				26BCDAAF2DFFE568C681B74A /* UI */,
+				20D0779243E94A4DA3C1E9BC /* Resources */,
 			);
 			path = Copydalis;
 			sourceTree = "<group>";
@@ -152,6 +157,14 @@
 				30528D9CF784EC502BFA12F3 /* HistoryRepository.swift */,
 			);
 			path = History;
+			sourceTree = "<group>";
+		};
+		20D0779243E94A4DA3C1E9BC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				458E47C796A64312940E0D61 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		21F08716EA51BB21793A0CC4 /* Products */ = {
@@ -247,6 +260,7 @@
 		92D0C6AC8A2809A96C898A35 /* Interaction */ = {
 			isa = PBXGroup;
 			children = (
+				64D5B698EAED867A7E3719FD /* HotKeyConfigurationTests.swift */,
 				14E2077E714658CC43049379 /* PasteTargetPolicyTests.swift */,
 				8B9751DAFBEA2E4F48C854B7 /* PopupInputInterpreterTests.swift */,
 				20EB55D43E16259C2B10FB9A /* SelectionSessionTests.swift */,
@@ -306,6 +320,7 @@
 			buildPhases = (
 				998E18D18AE4718CC196044D /* Sources */,
 				3BD7CF204C5C13B5374EFE51 /* Frameworks */,
+				518AE8A7FBF447378A61C13C /* Resources */,
 			);
 			buildRules = (
 			);
@@ -353,6 +368,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		518AE8A7FBF447378A61C13C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A8AC98613B744479F5E050A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		998E18D18AE4718CC196044D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -389,6 +415,7 @@
 				A347547397BBBF4DD3A2572F /* ClipboardFilterTests.swift in Sources */,
 				A9D418275873BF0901311B2E /* EntryCryptorTests.swift in Sources */,
 				4AFCE2DE17B261B5253CB491 /* HistoryRepositoryTests.swift in Sources */,
+				9A0DDE3FD40535D1689368AB /* HotKeyConfigurationTests.swift in Sources */,
 				F4DEB00F8DBC2879C53669F1 /* PasteTargetPolicyTests.swift in Sources */,
 				48B15C7B2282793B0263AC7F /* PopupInputInterpreterTests.swift in Sources */,
 				0D5BB76B428B595B64727E75 /* SecurityBaselineTests.swift in Sources */,

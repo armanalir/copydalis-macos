@@ -1,6 +1,5 @@
 import AppKit
 import ApplicationServices
-import Carbon.HIToolbox
 
 enum PasteResult: Equatable, Sendable {
     case pasteScheduled
@@ -9,13 +8,178 @@ enum PasteResult: Equatable, Sendable {
     case copiedOnlyByPreference
     case copiedOnlyTargetUnavailable
     case copiedOnlyTargetMismatch
-    case copiedOnlyEventCreationFailed
+    case copiedOnlyPasteCommandUnavailable(PasteCommandDiagnostic)
+    case copiedOnlyPasteCommandFailed(PasteCommandDiagnostic)
+}
+
+struct PasteCommandDiagnostic: Equatable, Sendable {
+    let stage: String
+    let accessibilityErrorCode: Int
+    let visitedElementCount: Int
+    let commandVCandidateCount: Int
+
+    var summary: String {
+        "stage=\(stage), axError=\(accessibilityErrorCode), visited=\(visitedElementCount), commandVCandidates=\(commandVCandidateCount)"
+    }
+}
+
+enum PasteMenuItemPolicy {
+    private static let commandOnlyModifiers = 0
+
+    static func matchesCommandV(
+        commandCharacter: String?,
+        modifiers: Int?,
+        isEnabled: Bool
+    ) -> Bool {
+        guard isEnabled, modifiers == commandOnlyModifiers else { return false }
+        return commandCharacter?.localizedLowercase == "v"
+    }
+}
+
+private enum PasteMenuActionResult {
+    case performed
+    case unavailable(PasteCommandDiagnostic)
+    case failed(PasteCommandDiagnostic)
+}
+
+private enum PasteMenuActionPerformer {
+    private static let maximumDepth = 8
+    private static let maximumVisitedElements = 600
+
+    static func performPaste(in processIdentifier: pid_t) -> PasteMenuActionResult {
+        let application = AXUIElementCreateApplication(processIdentifier)
+        let menuBarResult: (value: AXUIElement?, error: AXError) = attributeResult(
+            kAXMenuBarAttribute as CFString,
+            from: application
+        )
+        guard let menuBar = menuBarResult.value else {
+            return .unavailable(
+                diagnostic(
+                    stage: "menu-bar",
+                    error: menuBarResult.error,
+                    visited: 0,
+                    candidates: 0
+                )
+            )
+        }
+
+        var pending: [(element: AXUIElement, depth: Int)] = [(menuBar, 0)]
+        var visitedCount = 0
+        var commandVCandidateCount = 0
+
+        while let current = pending.popLast() {
+            visitedCount += 1
+            guard visitedCount <= maximumVisitedElements else {
+                return .unavailable(
+                    diagnostic(
+                        stage: "traversal-limit",
+                        error: .success,
+                        visited: visitedCount,
+                        candidates: commandVCandidateCount
+                    )
+                )
+            }
+
+            let commandCharacter: String? = attribute(
+                kAXMenuItemCmdCharAttribute as CFString,
+                from: current.element
+            )
+            let modifierNumber: NSNumber? = attribute(
+                kAXMenuItemCmdModifiersAttribute as CFString,
+                from: current.element
+            )
+            let enabledNumber: NSNumber? = attribute(
+                kAXEnabledAttribute as CFString,
+                from: current.element
+            )
+
+            if commandCharacter?.localizedLowercase == "v" {
+                commandVCandidateCount += 1
+            }
+
+            if PasteMenuItemPolicy.matchesCommandV(
+                commandCharacter: commandCharacter,
+                modifiers: modifierNumber?.intValue,
+                isEnabled: enabledNumber?.boolValue ?? false
+            ) {
+                let error = AXUIElementPerformAction(
+                    current.element,
+                    kAXPressAction as CFString
+                )
+                return error == .success
+                    ? .performed
+                    : .failed(
+                        diagnostic(
+                            stage: "ax-press",
+                            error: error,
+                            visited: visitedCount,
+                            candidates: commandVCandidateCount
+                        )
+                    )
+            }
+
+            guard current.depth < maximumDepth else { continue }
+            let children: [AXUIElement]? = attribute(
+                kAXChildrenAttribute as CFString,
+                from: current.element
+            )
+            for child in children ?? [] {
+                pending.append((child, current.depth + 1))
+            }
+        }
+
+        return .unavailable(
+            diagnostic(
+                stage: "command-v-not-found",
+                error: .success,
+                visited: visitedCount,
+                candidates: commandVCandidateCount
+            )
+        )
+    }
+
+    private static func diagnostic(
+        stage: String,
+        error: AXError,
+        visited: Int,
+        candidates: Int
+    ) -> PasteCommandDiagnostic {
+        PasteCommandDiagnostic(
+            stage: stage,
+            accessibilityErrorCode: Int(error.rawValue),
+            visitedElementCount: visited,
+            commandVCandidateCount: candidates
+        )
+    }
+
+    private static func attributeResult<T>(
+        _ name: CFString,
+        from element: AXUIElement
+    ) -> (value: T?, error: AXError) {
+        var value: CFTypeRef?
+        let error = AXUIElementCopyAttributeValue(element, name, &value)
+        guard error == .success, let value else { return (nil, error) }
+        return (value as? T, error)
+    }
+
+    private static func attribute<T>(
+        _ name: CFString,
+        from element: AXUIElement
+    ) -> T? {
+        var value: CFTypeRef?
+        guard
+            AXUIElementCopyAttributeValue(element, name, &value) == .success,
+            let value
+        else { return nil }
+        return value as? T
+    }
 }
 
 @MainActor
 final class PasteCoordinator {
     private static let activationPollInterval = 0.05
     private static let maximumActivationAttempts = 10
+    private static let targetSettlingDelay = 0.12
 
     private let writer: PasteboardWriter
     private let logger = PrivacySafeLogger(category: "paste")
@@ -75,7 +239,9 @@ final class PasteCoordinator {
                 frontmostProcessIdentifier: frontmostPID,
                 targetIsTerminated: targetApplication.isTerminated
             ) {
-                completion?(self.postCommandV(to: targetApplication.processIdentifier))
+                DispatchQueue.main.asyncAfter(deadline: .now() + Self.targetSettlingDelay) {
+                    completion?(self.performPasteCommand(in: targetApplication))
+                }
                 return
             }
 
@@ -96,22 +262,30 @@ final class PasteCoordinator {
         }
     }
 
-    private func postCommandV(to processIdentifier: pid_t) -> PasteResult {
-        guard
-            let source = CGEventSource(stateID: .combinedSessionState),
-            let keyDown = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_ANSI_V), keyDown: true),
-            let keyUp = CGEvent(keyboardEventSource: source, virtualKey: CGKeyCode(kVK_ANSI_V), keyDown: false)
-        else {
-            logger.error("automatic_paste_event_creation_failed")
-            return .copiedOnlyEventCreationFailed
+    private func performPasteCommand(in targetApplication: NSRunningApplication) -> PasteResult {
+        let frontmostPID = NSWorkspace.shared.frontmostApplication?.processIdentifier
+        guard PasteTargetPolicy.mayPostEvent(
+            expectedProcessIdentifier: targetApplication.processIdentifier,
+            frontmostProcessIdentifier: frontmostPID,
+            targetIsTerminated: targetApplication.isTerminated
+        ) else {
+            logger.info("automatic_paste_target_mismatch")
+            return .copiedOnlyTargetMismatch
         }
 
-        keyDown.flags = .maskCommand
-        keyUp.flags = .maskCommand
-        keyDown.postToPid(processIdentifier)
-        keyUp.postToPid(processIdentifier)
-        logger.info("automatic_paste_posted")
-        return .pasted
+        switch PasteMenuActionPerformer.performPaste(
+            in: targetApplication.processIdentifier
+        ) {
+        case .performed:
+            logger.info("automatic_paste_menu_action_performed")
+            return .pasted
+        case let .unavailable(diagnostic):
+            logger.info("automatic_paste_menu_command_unavailable")
+            return .copiedOnlyPasteCommandUnavailable(diagnostic)
+        case let .failed(diagnostic):
+            logger.error("automatic_paste_menu_action_failed")
+            return .copiedOnlyPasteCommandFailed(diagnostic)
+        }
     }
 
     func requestAccessibilityPermission() {

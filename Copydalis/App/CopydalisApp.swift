@@ -109,10 +109,30 @@ final class CopydalisApp: NSObject, NSApplicationDelegate {
         settingsController = SettingsWindowController(
             settings: settings,
             pasteCoordinator: pasteCoordinator,
+            onHotKeyRecordingStateChanged: { [weak self] isRecording in
+                self?.handleHotKeyRecordingStateChanged(isRecording)
+            },
             onSettingsChanged: { [weak self] in
                 self?.applySettingsChanges()
             }
         )
+    }
+
+    private func handleHotKeyRecordingStateChanged(_ isRecording: Bool) {
+        if isRecording {
+            hotKeyRegistrar.unregister()
+            return
+        }
+
+        do {
+            try configureHotKey()
+        } catch {
+            settings.hotKey = registeredHotKey
+            try? hotKeyRegistrar.register(configuration: registeredHotKey) { [weak self] in
+                self?.beginSelectionSession()
+            }
+            presentOperationError("That global shortcut is unavailable. The previous shortcut was restored.")
+        }
     }
 
     private func configureClipboardMonitor(repository: SQLiteHistoryRepository) {

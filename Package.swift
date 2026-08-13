@@ -17,16 +17,16 @@ let package = Package(
                 "Settings",
                 "UI",
                 "Clipboard/ClipboardMonitor.swift",
-                "Clipboard/PasteboardWriter.swift",
-                "Interaction/CarbonHotKeyRegistrar.swift",
-                "Interaction/HotKeyConfiguration.swift",
-                "Interaction/PasteCoordinator.swift"
+                "Interaction/CarbonHotKeyRegistrar.swift"
             ],
             sources: [
                 "Clipboard/ClipboardFilter.swift",
+                "Clipboard/PasteboardWriter.swift",
                 "Diagnostics/PrivacySafeLogger.swift",
                 "History/ClipboardEntry.swift",
                 "History/HistoryRepository.swift",
+                "Interaction/HotKeyConfiguration.swift",
+                "Interaction/PasteCoordinator.swift",
                 "Interaction/PasteTargetPolicy.swift",
                 "Interaction/PopupInputInterpreter.swift",
                 "Interaction/SelectionSession.swift",
@@ -34,6 +34,9 @@ let package = Package(
                 "Security/KeyMaterialStore.swift"
             ],
             linkerSettings: [
+                .linkedFramework("AppKit"),
+                .linkedFramework("ApplicationServices"),
+                .linkedFramework("Carbon"),
                 .linkedFramework("CryptoKit"),
                 .linkedFramework("Security"),
                 .linkedLibrary("sqlite3")
